@@ -1,0 +1,38 @@
+<section class="signup-form">
+    <form fxLayout="column" fxLayoutAlign="center center" #f="ngForm" fxLayoutGap="10px" (ngSubmit)="onSubmit(f)">
+        <!--primul fx ne ajuta sa puneme elementele pe coloana si al doilea fx sa le centram-->
+        <mat-form-field>
+            <input type="email" matInput placeholder="Your email" ngModel name="email" email required
+                #emailInput="ngModel">
+            <mat-error *ngIf="emailInput.hasError('required')">Field must not be empty</mat-error>
+            <mat-error *ngIf="!emailInput.hasError('required')">E-mail is invalid</mat-error>
+        </mat-form-field>
+        <mat-form-field hintLabel="It required to have 6">
+            <input type="password" matInput placeholder="Your password" ngModel name="password" required minlength="6"
+                #pwInput="ngModel">
+            <mat-error>Password is invalid</mat-error>
+            <mat-hint align="end">{{pwInput.value?.length}}/6</mat-hint>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Your Birthdate" [matDatepicker]="picker" [max]="maxDate" ngModel name="birthdate" required>
+            <!--acest piker pointeaza to la referinta de mai jos, preia valorea si ne-o afiseaza-->
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <!-- acest picker pointeaza catre referinta de mai jos, practic in acest camp ne afiseaza calendarul si alegem o valoare-->
+            <mat-datepicker #picker></mat-datepicker>
+            <!-- acel picker este o referinta locala care stocheaza valoarea-->
+        </mat-form-field>
+        
+        <mat-checkbox ngModel name="agree" required color="primary">Agree to Terms and Conditions</mat-checkbox>
+            
+       
+
+
+
+        <button type="submit" mat-raised-button color="primary" [disabled]="f.invalid">Submit</button>
+    </form>
+</section>
+<!--<section id="container">
+    <div id="child1"class="child"></div>
+    <div id="chi "child3"class="child"></div>
+</section> 
+-->
