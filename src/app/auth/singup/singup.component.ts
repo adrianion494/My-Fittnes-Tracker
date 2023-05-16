@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {NgForm} from '@angular/forms/';
 import { AuthService } from '../auth.service';
+import { Firestore, collection, addDoc } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-singup',
@@ -10,7 +11,9 @@ import { AuthService } from '../auth.service';
 export class SingupComponent {
   maxDate=new Date();
 
-  constructor(private authService:AuthService){
+  constructor(private authService:AuthService,
+    private firestore:Firestore
+    ){
 
   }
 
@@ -19,11 +22,21 @@ export class SingupComponent {
 
   }
   onSubmit(form:NgForm){
-    this.authService.registerUser({
+    /*this.authService.registerUser({
       email: form.value.email,
       password: form.value.password
-
     });
+    */
+     console.log(form.value);
+     const collectionInstance=collection(this.firestore, 'users');
+     addDoc(collectionInstance, form.value)
+     .then(()=>{
+      console.log("Data Saved Successfully");
+     })
+     .catch((err)=>{
+      console.log(err);
+     })
+
   }
 
 }

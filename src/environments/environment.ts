@@ -6,12 +6,13 @@
 export const environment = {
   production: false,
   firebase: {
-  apiKey: "AIzaSyBamKhYOsTA4_lKnR8fLRJqdXQrBLNzO7s",
-  authDomain: "ng-fittnes-trackerr.firebaseapp.com",
-  projectId: "ng-fittnes-trackerr",
-  storageBucket: "ng-fittnes-trackerr.appspot.com",
-  messagingSenderId: "102872956598",
-  appId: "1:102872956598:web:aa2540ace9da5a71043017",
-  measurementId: "G-DL6XM4ZQDG"
+    projectId: 'ng-fittnes-trackerr',
+    appId: '1:102872956598:web:aa2540ace9da5a71043017',
+    databaseURL: 'https://ng-fittnes-trackerr-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'ng-fittnes-trackerr.appspot.com',
+    apiKey: 'AIzaSyBamKhYOsTA4_lKnR8fLRJqdXQrBLNzO7s',
+    authDomain: 'ng-fittnes-trackerr.firebaseapp.com',
+    messagingSenderId: '102872956598',
+    measurementId: 'G-DL6XM4ZQDG',
   }
 };

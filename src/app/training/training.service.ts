@@ -1,6 +1,8 @@
 import { Subject } from "rxjs-compat/Subject";
 
-import { Exercise } from "./exercise.model";
+import { Exercise } from "./exercise.model";;
+import { Firestore, collectionData, collection, getDocs, } from '@angular/fire/firestore';
+
 
 export class TrainingService {
 exerciseChanged=new Subject<Exercise>();
@@ -13,6 +15,9 @@ exerciseChanged=new Subject<Exercise>();
     ];
     private runningExercise: Exercise;
     private exercises:Exercise[]=[];
+
+    private allDocs:any[]=[];
+    
 
     getAvaibleExercises(){
         return this.avaibleExercises.slice();
