@@ -1,10 +1,10 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, OnDestroy } from '@angular/core';
 
 import { TrainingService } from '../training.service';
 import { Exercise } from '../exercise.model';
 import { NgForm } from '@angular/forms';
 
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators'
 
 import { Firestore, collectionData, collection, getDocs } from '@angular/fire/firestore';
@@ -17,9 +17,10 @@ import { Firestore, collectionData, collection, getDocs } from '@angular/fire/fi
   templateUrl: './new-training.component.html',
   styleUrls: ['./new-training.component.css']
 })
-export class NewTrainingComponent implements OnInit {
-  exercises: Observable<any[]>;
+export class NewTrainingComponent implements OnInit, OnDestroy {
+  exercises: Observable<any>;
   exercises$: any[] = [];
+  exerciseSubscription:Subscription;
   //firestore: Firestore = inject(Firestore);
 
 
@@ -40,18 +41,17 @@ export class NewTrainingComponent implements OnInit {
 
     this.exercises = collectionData(collectionInstance)
     
-    
 
-
-
-
-
-
-
+   /*this.exerciseSubscription= this.trainingService.exercisesChanged.subscribe(exercises=>this.exercises=this.exercises);
+    this.trainingService.fetchAvaibleExercises();*/
   }
 
   onStartTraining(form: NgForm) {
     this.trainingService.startExercise(form.value.exercise);
+  }
+
+  ngOnDestroy(): void {
+      this.exerciseSubscription.unsubscribe();
   }
 
 }

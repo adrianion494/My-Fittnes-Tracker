@@ -4,7 +4,7 @@
       fxLayoutAlign="center center"
       fxLayoutGap="10px"
       [formGroup]="loginForm"
-      (ngSubmit)="onSubmit()">
+      (ngSubmit)="handleLogin(loginForm.value)">
       <mat-form-field>
         <input
           type="email"
@@ -24,5 +24,9 @@
         <mat-error>Missing password.</mat-error>
       </mat-form-field>
       <button type="submit" mat-raised-button color="primary" [disabled]="loginForm.invalid">Submit</button>
+      
+      <div (click)="loginWithGoogle()" class="google-card">
+        <button type="submit" mat-raised-button color="primary" >Login Google</button>
+      </div>
     </form>
   </section>
