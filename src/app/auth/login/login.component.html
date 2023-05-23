@@ -23,10 +23,10 @@
         <mat-hint>Please enter your password.</mat-hint>
         <mat-error>Missing password.</mat-error>
       </mat-form-field>
-      <button type="submit" mat-raised-button color="primary" [disabled]="loginForm.invalid">Submit</button>
-      
+      <button *ngIf="!isLoading" type="submit" mat-raised-button color="primary" [disabled]="loginForm.invalid">Submit</button>
+      <mat-spinner *ngIf="isLoading"></mat-spinner>
       <div (click)="loginWithGoogle()" class="google-card">
-        <button type="submit" mat-raised-button color="primary" >Login Google</button>
+        <button  type="submit" mat-raised-button color="primary" >Login Google</button>
       </div>
     </form>
   </section>

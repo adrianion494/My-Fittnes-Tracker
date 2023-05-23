@@ -21,6 +21,7 @@ export class NewTrainingComponent implements OnInit, OnDestroy {
   exercises: Observable<any>;
   exercises$: any[] = [];
   exerciseSubscription:Subscription;
+  isLoading=true;
   //firestore: Firestore = inject(Firestore);
 
 
@@ -36,6 +37,7 @@ export class NewTrainingComponent implements OnInit, OnDestroy {
     const collectionInstance = collection(this.firestore, 'avaibleExercises')
     collectionData(collectionInstance)
       .subscribe(val => {
+        this.isLoading=false;
         console.log(val)
       })
 

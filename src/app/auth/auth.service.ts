@@ -8,6 +8,7 @@ import { Router } from "@angular/router";
 import { FirebaseApp } from "@angular/fire/app";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { GoogleAuthProvider } from "firebase/auth";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Injectable(
     {
@@ -18,8 +19,24 @@ export class AuthService{
     authChange=new Subject<boolean>();
     private user: User;
 
-    constructor(private router:Router, private afAuth:AngularFireAuth){
+    constructor(private router:Router, 
+        private afAuth:AngularFireAuth,
+        private snackBar:MatSnackBar){
         //this.auth=firebase.auth;
+    }
+
+    initAuthListener(){
+        this.afAuth.authState.subscribe(user=>{
+           if (user){
+            this.authChange.next(true);
+            this.router.navigate(['/training']);
+           } 
+           else{
+            this.user=null;
+            this.authChange.next(false);
+            this.router.navigate(['/login']);
+           } 
+        });
     }
 
     signInWithGoogle(){
@@ -43,7 +60,7 @@ export class AuthService{
             userId:Math.round(Math.random()*1000).toString()
         };
 
-        this.authSuccessfully();
+       this.authSuccessfully();
 
         
         }
@@ -75,5 +92,5 @@ export class AuthService{
     authSuccessfully(){
         this.authChange.next(true);
         this.router.navigate(['/training']);
-    }
+    } 
 }
