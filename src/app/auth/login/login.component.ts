@@ -4,9 +4,10 @@ import { AuthService } from '../auth.service';
 import { Route, Router } from '@angular/router';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { Auth } from '@angular/fire/auth';
-import { MatSnackBar } from '@angular/material/snack-bar';
+
 import { UIService } from 'src/app/shared/ui.service';
 import { Subscription } from 'rxjs-compat/subscription';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -20,8 +21,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   private loadingSubs: Subscription
 
   constructor(private authService:AuthService, private router:Router, private auth:Auth,
-    private snackBar:MatSnackBar,
-    private uiService:UIService){}
+    private snackBar:MatSnackBar, 
+    private uiService:UIService
+    ){}
 
   ngOnInit(): void {
     this.loadingSubs=this.uiService.loadingStateChaged.subscribe(isLoading=>{
@@ -59,9 +61,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     })
     .catch((error:any)=>{
       this.uiService.loadingStateChaged.next(false);
-      this.snackBar.open(error.message, null, {
+      this.uiService.showSanckbar(error.message, null, 3000);
+      /*this.snackBar.open(error.message, null, {
         duration:3000
-      });
+      });*/
   })
   }
 
@@ -70,13 +73,13 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authService.signWithEmailAndPassword(userData).then((res:any)=>{
     this.router.navigate(['/training'])
     }).catch((error:any)=>{
-      this.snackBar.open(error.message, null, {
-        duration:3000
-      });
+      
   })
   }
 
   ngOnDestroy(): void {
-      this.loadingSubs.unsubscribe();
+      if(this.loadingSubs){
+        this.loadingSubs.unsubscribe();  
+      }
   }
 }

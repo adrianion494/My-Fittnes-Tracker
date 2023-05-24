@@ -1,5 +1,5 @@
 import { Subject } from "rxjs-compat/Subject";
-
+import { UIService } from 'src/app/shared/ui.service';
 import { Exercise } from "./exercise.model";;
 import { Firestore, collectionData, collection, getDocs, addDoc, } from '@angular/fire/firestore';
 import { Injectable } from "@angular/core";
@@ -18,7 +18,7 @@ exercisesChanged=new Subject<Exercise[]>();
     private runningExercise: Exercise;
     private exercises:Exercise[]=[];
 
-    constructor(private firestore:Firestore){
+    constructor(private firestore:Firestore, private uiService:UIService){
 
     }
 
@@ -35,6 +35,9 @@ exercisesChanged=new Subject<Exercise[]>();
         .subscribe((exercises:Exercise[])=> {
         this.avaibleExercises=exercises;
         this.exercisesChanged.next([...this.avaibleExercises]);
+      },
+       error=>{
+        this.uiService.showSanckbar('Fetching Exercises failed, please try again later', null, 3000)
       })
     }
 
