@@ -9,6 +9,8 @@ import { FirebaseApp } from "@angular/fire/app";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { GoogleAuthProvider } from "firebase/auth";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import * as fromApp from '../app.reducer';
+import { Store } from "@ngrx/store";
 
 @Injectable(
     {
@@ -21,7 +23,8 @@ export class AuthService{
 
     constructor(private router:Router, 
         private afAuth:AngularFireAuth,
-        private snackBar:MatSnackBar){
+        private snackBar:MatSnackBar,
+        private store:Store<{ui: fromApp.State}>){
         //this.auth=firebase.auth;
     }
 
